@@ -33,7 +33,6 @@ type (
 )
 
 // TODO(bilus): Set model.LastError
-// TODO(bilus): Model registration with gob
 
 func NewApp[M any](mc ModelConstructor[M]) *App[M] {
 	return &App[M]{
@@ -86,7 +85,7 @@ func do[M any](handlers []Handler[M], c *Context, m *M) error {
 	return nil
 }
 
-func (r *App[M]) Wrap(v View[M]) gin.HandlerFunc {
+func (r *App[M]) Handler(v View[M]) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		params := Params{c}
 		context := Context{
