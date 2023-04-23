@@ -2,6 +2,7 @@ package undead
 
 import (
 	"bytes"
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -35,6 +36,8 @@ type (
 // TODO(bilus): Set model.LastError
 
 func NewApp[M any](mc ModelConstructor[M]) *App[M] {
+	gob.Register(*mc())
+
 	return &App[M]{
 		newModel:      mc,
 		eventHandlers: (make(map[string]Handler[M])),
